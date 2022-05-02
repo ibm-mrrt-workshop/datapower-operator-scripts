@@ -2,7 +2,7 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: mpgw
-  namespace: validation-flow
+  namespace: tools
 spec:
   to:
     kind: Service

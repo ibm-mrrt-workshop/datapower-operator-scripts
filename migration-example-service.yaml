@@ -2,10 +2,10 @@ kind: Service
 apiVersion: v1
 metadata:
   name: example-service
-  namespace: validation-flow
+  namespace: tools
 spec:
   selector:
-    app.kubernetes.io/instance: validation-flow-migration-example
+    app.kubernetes.io/instance: tools-migration-example
   ports:
     - name: mpgw
       protocol: TCP

@@ -9,7 +9,8 @@ zipfiles=`git diff HEAD --name-only | grep -E '.zip' | sed -e 's/\.zip$//'`
 
 # Create variable for seperate domains using grep/sed -
 # need this because of no passed domain vars between migrate-backup.
-# Pass domains to dps and generate additional domains in yaml.
+# (Consider passing domains to this file?)
+# Pass domains to dps and refer to additional configmaps in yaml.
 
 # Change secret creation in docs for domains.
 # Use dps as a reference.

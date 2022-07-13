@@ -4,21 +4,26 @@ declare -a portarr=("5611" "9090")
 
 zipfiles=`git diff HEAD --name-only | grep -E '.zip' | sed -e 's/\.zip$//'`
 
+# Check manual deployment in new namespace.
+
 # Create variable for seperate domains using grep/sed -
 # need this because of no passed domain vars between migrate-backup.
+# Pass domains to dps and generate additional domains in yaml.
+
+# Change secret creation in docs for domains.
+# Use dps as a reference.
 
 # Use extracted array to manipulate both cfg & local yamls' naming conventions -
 # by removing the enviroment flag name - might do in migrate-backup.
 
 # Iterate sync-waves for multiple domains for cfg, local, and routes yamls.
 
-# Ensure domain specific yamls are moved to GitOps repo.
-
+# Check add logic for multiple domain configmaps.
 # Check add logic for kustomization.yaml - ensure names are correct.
 # Check remove logic for GitOps DP multiple domain yamls.
 
-# DEMO
-# Consider changing DPS pods to 1 and scale up with GitOps.
+# DEMO ----------------------------------------
+# Changed DPS pods to 1 to show scaling up with GitOps.
 # Point out sync-wave iteration.
 
 for file in $zipfiles; do

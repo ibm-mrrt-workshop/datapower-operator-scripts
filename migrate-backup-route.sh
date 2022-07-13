@@ -12,7 +12,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "370"
   name: $NAME-$PORT-route
-  namespace: $NAME-migration
+  namespace: $NAME
 spec:
   to:
     kind: Service

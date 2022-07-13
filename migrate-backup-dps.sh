@@ -2,6 +2,21 @@
 
 #define parameters which are passed in.
 NAME=$1
+DOMAINS=$@
+
+DOMAINLIST=$(
+  for DOMAIN in {$DOMAINS}; do
+echo "    - name: $DOMAIN"
+echo "      certs:"
+echo "      - certType: usrcerts"
+echo "        secret: $DOMAIN-cert"
+echo "      dpApp:"
+echo "        config:"
+echo "        - $NAME-cfg"
+echo "        local:"
+echo "        - $NAME-local"
+  done;
+)
 
 #define the template.
 cat  << EOF
@@ -10,9 +25,9 @@ kind: DataPowerService
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "350"
-  name: $NAME-instance
+  name: $NAME
 spec:
-  replicas: 3
+  replicas: 1
   version: 10.0-cd
   license:
     accept: true
@@ -26,10 +41,11 @@ spec:
     - name: default
       certs:
       - certType: usrcerts
-        secret: datapower-cert
+        secret: default-cert
       dpApp:
         config:
-        - $NAME-default-cfg
+        - default-cfg
         local:
-        - $NAME-default-local
+        - default-local
+$PORTLIST
 EOF

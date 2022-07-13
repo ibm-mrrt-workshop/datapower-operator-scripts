@@ -5,6 +5,7 @@ declare -a portarr=("5611" "9090")
 zipfiles=`git diff HEAD --name-only | grep -E '.zip' | sed -e 's/\.zip$//'`
 
 # Check manual deployment in new namespace.
+# Check for errors with configmap naming conventions.
 
 # Create variable for seperate domains using grep/sed -
 # need this because of no passed domain vars between migrate-backup.

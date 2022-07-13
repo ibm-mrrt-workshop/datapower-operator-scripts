@@ -18,7 +18,9 @@ zipfiles=`git diff HEAD --name-only | grep -E '.zip' | sed -e 's/\.zip$//'`
 # Use extracted array to manipulate both cfg & local yamls' naming conventions -
 # by removing the enviroment flag name - might do in migrate-backup.
 
-# Iterate sync-waves for multiple domains for cfg, local, and routes yamls.
+# Iterate sync-waves for multiple domains for cfg & local - migrate-backup -
+# test domains as they may be working.
+# Also iterate sync-waves for routes yamls.
 
 # Check add logic for multiple domain configmaps.
 # Check add logic for kustomization.yaml - ensure names are correct.

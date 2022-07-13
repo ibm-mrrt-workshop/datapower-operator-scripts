@@ -14,6 +14,7 @@ zipfiles=`git diff HEAD --name-only | grep -E '.zip' | sed -e 's/\.zip$//'`
 
 # Ensure domain specific yamls are moved to GitOps repo.
 
+# Check add logic for kustomization.yaml - ensure names are correct.
 # Check remove logic for GitOps DP multiple domain yamls.
 
 # DEMO

@@ -9,7 +9,8 @@ UNPACK_DIR=""
 DOMAINS=()
 DOMAIN=""
 OUTPUT_DIR=""
-SYNC_WAVE_COUNT=321
+CFG_SYNC_WAVE_COUNT=321
+LOCAL_SYNC_WAVE_COUNT=321
 
 #############
 # Functions #
@@ -192,10 +193,10 @@ process_domain() {
                     --from-file="${OUTPUT_DIR}/${domain}.cfg" \
                     --dry-run="client" \
                     --output="yaml" > $OUTPUT_DIR/$domain-cfg.yaml
-                echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain-cfg.yaml
+                echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${CFG_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain-cfg.yaml
                 sed -i '' "s/name: default-cfg/name: ${domain}-cfg/g" $OUTPUT_DIR/$domain-cfg.yaml
                 echo "Generated: ${OUTPUT_DIR}/${domain}-cfg.yaml"
-                SYNC_WAVE_COUNT=$((SYNC_WAVE_COUNT+1))
+                CFG_SYNC_WAVE_COUNT=$((CFG_SYNC_WAVE_COUNT+1))
             done
         fi
     fi
@@ -209,9 +210,10 @@ process_domain() {
             --from-file="${OUTPUT_DIR}/${domain}-local.tar.gz" \
             --dry-run="client" \
             --output="yaml" > $OUTPUT_DIR/$domain-local.yaml
-        echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"310\"" >> $OUTPUT_DIR/$domain-local.yaml
+        echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${LOCAL_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain-local.yaml
         sed -i '' "s/name: default-local/name: ${domain}-local/g" $OUTPUT_DIR/$domain-local.yaml
         echo "Generated: ${OUTPUT_DIR}/${domain}-local.yaml"
+        LOCAL_SYNC_WAVE_COUNT=$((LOCAL_SYNC_WAVE_COUNT+1))
     fi
 }
 

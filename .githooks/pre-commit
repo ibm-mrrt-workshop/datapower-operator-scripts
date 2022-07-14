@@ -19,6 +19,7 @@ zipfiles=`git diff HEAD --name-only | grep -E '.zip' | sed -e 's/\.zip$//'`
 # by removing the enviroment flag name - might do in migrate-backup.
 
 # Iterate sync-waves for multiple domains for cfg & local - migrate-backup -
+####### Might be done ##########
 # test domains as they may be working.
 # Also iterate sync-waves for routes yamls.
 

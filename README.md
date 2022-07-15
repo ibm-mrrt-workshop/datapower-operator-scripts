@@ -158,6 +158,17 @@ Instead:
   - In the upper right corner of the OpenShift Web Console select the IAM user and click "Copy login command" in the drop down menu.
   - In the window that opens, copy the first CLI input and paste it into your CLI of choice.
 
+4. Configuration for ODF on OCP 4.10+
+  - Delete the `multi-tenancy-gitops` repo from your `GIT_ORG` if it exists.
+  - Fork the [Cloud Native Toolkit](https://github.com/cloud-native-toolkit/multi-tenancy-gitops/generate) to your existing `GIT_ORG`.
+  - Clone the `multi-tenancy-gitops` repo to your local machine.
+  - Navigate to the `/scripts` folder to run the `set-git-source.sh` script.
+  - Commit and push.
+  - Run the `infra-mod.sh` script to deploy ODF Storage.
+  - Commit and push.
+  - Navigate to Argo in the OpenShift web console
+  - Refresh Argo to see the changes.
+
 **Instructions**
 
 1. Add and commit a DataPower backup zip to this repository.

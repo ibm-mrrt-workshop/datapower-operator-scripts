@@ -2,9 +2,9 @@
 
 #define parameters which are passed in.
 NAME=$1
-DOMAINS=$@
+DOMAINLIST=DOMAINS
 
-DOMAINLIST=$(
+INDVDOMAIN=$(
   for DOMAIN in {$DOMAINS}; do
 echo "    - name: $DOMAIN"
 echo "      certs:"
@@ -47,5 +47,5 @@ spec:
         - default-cfg
         local:
         - default-local
-$PORTLIST
+$INDVDOMAIN
 EOF

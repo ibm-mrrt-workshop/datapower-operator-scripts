@@ -6,17 +6,16 @@ DOMAINLIST=$@
 
 INDVDOMAIN=$(
   for DOMAIN in {$DOMAINLIST}; do
-    declare -l DOMAIN
-    DOMAIN=$DOMAIN
-    echo "    - name: $DOMAIN"
+    $LOWER=`echo "$DOMAIN" | sed 's/./\L&/g'`
+    echo "    - name: $LOWER"
     echo "      certs:"
     echo "      - certType: usrcerts"
-    echo "        secret: $DOMAIN-cert"
+    echo "        secret: $LOWER-cert"
     echo "      dpApp:"
     echo "        config:"
-    echo "        - $DOMAIN-cfg"
+    echo "        - $LOWER-cfg"
     echo "        local:"
-    echo "        - $DOMAIN-local"
+    echo "        - $LOWER-local"
   done;
 )
 

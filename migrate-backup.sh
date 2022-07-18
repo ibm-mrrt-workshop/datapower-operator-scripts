@@ -96,6 +96,7 @@ populate_domains_array() {
 
     count="${#DOMAINS[@]}"
     echo "Found ${count} domains"
+    export DOMAINS
 }
 
 pretty_print_cfg() {

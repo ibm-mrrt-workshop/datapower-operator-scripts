@@ -4,6 +4,7 @@
 # Globals #
 ###########
 
+declare -a PORTARR=("5611" "9090")
 BACKUP_ZIP=""
 UNPACK_DIR=""
 DOMAINS=()
@@ -80,6 +81,17 @@ validate_backup_fs() {
     fi
 }
 
+create_yamls() {
+    ./migrate-backup-dps.sh ${BACKUP_ZIP%.*} ${DOMAINS[@]} > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-dps.yaml
+    echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-dps.yaml created"
+    ./migrate-backup-service.sh ${BACKUP_ZIP%.*} "${PORTARR[@]}" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-service.yaml
+    echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-service.yaml created"
+    for port in "${PORTARR[@]}"; do
+      ./migrate-backup-route.sh ${BACKUP_ZIP%.*} "$port" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml
+      echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml created"
+    done;
+}
+
 populate_domains_array() {
     local zipfile
     local domain
@@ -96,8 +108,7 @@ populate_domains_array() {
 
     count="${#DOMAINS[@]}"
     echo "Found ${count} domains"
-    echo "${DOMAINS[@]} - 1"
-    export ALLDOMAINS=DOMAINS[@]
+    create_yamls
 }
 
 pretty_print_cfg() {

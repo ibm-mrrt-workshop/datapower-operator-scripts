@@ -105,7 +105,7 @@ populate_domains_array() {
         domain=$(basename $zipfile)
         domain=${domain%.*}
         echo "Found domain backup: ${domain}"
-        lowercasedomain="${domain,,}"
+        lowercasedomain="$a" | sed -e 's/\(.*\)/\L\1/'
         DOMAINS+=("$lowercasedomain")
     done
 

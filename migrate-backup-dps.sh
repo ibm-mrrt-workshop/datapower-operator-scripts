@@ -4,19 +4,19 @@
 NAME=$1; shift
 DOMAINLIST=$@
 
-echo "${DOMAINLIST}"
-
 INDVDOMAIN=$(
   for DOMAIN in {$DOMAINLIST}; do
-    echo "    - name: ${DOMAIN,,}"
+    declare -l DOMAIN
+    DOMAIN=$DOMAIN
+    echo "    - name: $DOMAIN"
     echo "      certs:"
     echo "      - certType: usrcerts"
-    echo "        secret: ${DOMAIN,,}-cert"
+    echo "        secret: $DOMAIN-cert"
     echo "      dpApp:"
     echo "        config:"
-    echo "        - ${DOMAIN,,}-cfg"
+    echo "        - $DOMAIN-cfg"
     echo "        local:"
-    echo "        - ${DOMAIN,,}-local"
+    echo "        - $DOMAIN-local"
   done;
 )
 

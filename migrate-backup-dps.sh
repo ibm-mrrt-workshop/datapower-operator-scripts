@@ -6,15 +6,15 @@ DOMAINLIST=$@
 
 INDVDOMAIN=$(
   for DOMAIN in {$DOMAINLIST}; do
-    echo "    - name: $DOMAIN"
+    echo "    - name: ${DOMAIN,,}"
     echo "      certs:"
     echo "      - certType: usrcerts"
-    echo "        secret: $DOMAIN-cert"
+    echo "        secret: ${DOMAIN,,}-cert"
     echo "      dpApp:"
     echo "        config:"
-    echo "        - $DOMAIN-cfg"
+    echo "        - ${DOMAIN,,}-cfg"
     echo "        local:"
-    echo "        - $DOMAIN-local"
+    echo "        - ${DOMAIN,,}-local"
   done;
 )
 
@@ -38,14 +38,5 @@ spec:
     accessLevel: privileged
     passwordSecret: datapower-user
   domains:
-    - name: default
-      certs:
-      - certType: usrcerts
-        secret: default-cert
-      dpApp:
-        config:
-        - default-cfg
-        local:
-        - default-local
 $INDVDOMAIN
 EOF

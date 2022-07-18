@@ -4,6 +4,8 @@
 NAME=$1; shift
 DOMAINLIST=$@
 
+echo "${DOMAINLIST}"
+
 INDVDOMAIN=$(
   for DOMAIN in {$DOMAINLIST}; do
     echo "    - name: ${DOMAIN,,}"

@@ -96,6 +96,7 @@ create_yamls() {
 populate_domains_array() {
     local zipfile
     local domain
+    local lowercasedomain
     local count
 
     echo "Searching for domains..."
@@ -104,7 +105,8 @@ populate_domains_array() {
         domain=$(basename $zipfile)
         domain=${domain%.*}
         echo "Found domain backup: ${domain}"
-        DOMAINS+=("${domain,,}")
+        lowercasedomain=${domain,,}
+        DOMAINS+=("$lowercasedomain")
     done
 
     count="${#DOMAINS[@]}"

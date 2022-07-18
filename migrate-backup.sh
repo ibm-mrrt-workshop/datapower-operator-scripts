@@ -82,7 +82,9 @@ validate_backup_fs() {
 }
 
 create_yamls() {
-    ./migrate-backup-dps.sh ${BACKUP_ZIP%.*} ${DOMAINS[@]} > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-dps.yaml
+    echo ${DOMAINS[@]}
+    echo "${DOMAINS[@]} - 1"
+    ./migrate-backup-dps.sh ${BACKUP_ZIP%.*} "${DOMAINS[@]}" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-dps.yaml
     echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-dps.yaml created"
     ./migrate-backup-service.sh ${BACKUP_ZIP%.*} "${PORTARR[@]}" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-service.yaml
     echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-service.yaml created"
@@ -108,7 +110,7 @@ populate_domains_array() {
 
     count="${#DOMAINS[@]}"
     echo "Found ${count} domains"
-    create_yamls
+    create_yamls $DOMAINS[@]
 }
 
 pretty_print_cfg() {

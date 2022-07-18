@@ -1,13 +1,11 @@
 #!/bin/bash
 
 #define parameters which are passed in.
-NAME=$1
-DOMAINLIST=ALLDOMAINS
-echo "${ALLDOMAINS} - 3"
-echo "${DOMAINLIST} - 4"
+NAME=$1; shift
+DOMAINLIST=$@
 
 INDVDOMAIN=$(
-  for DOMAIN in {$DOMAINS}; do
+  for DOMAIN in {$DOMAINLIST}; do
     echo "    - name: $DOMAIN"
     echo "      certs:"
     echo "      - certType: usrcerts"

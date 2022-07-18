@@ -3,6 +3,8 @@
 #define parameters which are passed in.
 NAME=$1
 DOMAINLIST=DOMAINS
+echo "${DOMAINS} - 3"
+echo "${DOMAINLIST} - 4"
 
 INDVDOMAIN=$(
   for DOMAIN in {$DOMAINS}; do
@@ -12,9 +14,9 @@ echo "      - certType: usrcerts"
 echo "        secret: $DOMAIN-cert"
 echo "      dpApp:"
 echo "        config:"
-echo "        - $NAME-cfg"
+echo "        - $DOMAIN-cfg"
 echo "        local:"
-echo "        - $NAME-local"
+echo "        - $DOMAIN-local"
   done;
 )
 

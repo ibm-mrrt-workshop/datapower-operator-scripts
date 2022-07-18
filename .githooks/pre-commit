@@ -39,6 +39,7 @@ for file in $zipfiles; do
 
     echo "extracting resources from ${file}.zip"
     ./migrate-backup.sh $file.zip
+    echo "${DOMAINS} - 2"
     ./migrate-backup-dps.sh $file > ./$file/$file-output/$file-dps.yaml
     echo "./$file/$file-output/$file-dps.yaml created"
     ./migrate-backup-service.sh $file "${portarr[@]}" > ./$file/$file-output/$file-service.yaml

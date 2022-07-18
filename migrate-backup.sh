@@ -96,6 +96,7 @@ populate_domains_array() {
 
     count="${#DOMAINS[@]}"
     echo "Found ${count} domains"
+    echo "${DOMAINS} - 1"
     export DOMAINS
 }
 

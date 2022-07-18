@@ -4,18 +4,18 @@
 NAME=$1; shift
 DOMAINLIST=$@
 
+
 INDVDOMAIN=$(
   for DOMAIN in {$DOMAINLIST}; do
-    $LOWER=`echo "$DOMAIN" | sed 's/./\L&/g'`
-    echo "    - name: $LOWER"
+    echo "    - name: $DOMAIN"
     echo "      certs:"
     echo "      - certType: usrcerts"
-    echo "        secret: $LOWER-cert"
+    echo "        secret: $DOMAIN-cert"
     echo "      dpApp:"
     echo "        config:"
-    echo "        - $LOWER-cfg"
+    echo "        - $DOMAIN-cfg"
     echo "        local:"
-    echo "        - $LOWER-local"
+    echo "        - $DOMAIN-local"
   done;
 )
 

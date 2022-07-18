@@ -104,7 +104,7 @@ populate_domains_array() {
         domain=$(basename $zipfile)
         domain=${domain%.*}
         echo "Found domain backup: ${domain}"
-        DOMAINS+=("$domain")
+        DOMAINS+=("`echo "$domain" | sed 's/./\L&/g'`")
     done
 
     count="${#DOMAINS[@]}"

@@ -105,7 +105,7 @@ populate_domains_array() {
         domain=$(basename $zipfile)
         domain=${domain%.*}
         echo "Found domain backup: ${domain}"
-        lowercasedomain=${domain,,}
+        lowercasedomain="${domain,,}"
         DOMAINS+=("$lowercasedomain")
     done
 

@@ -2,21 +2,21 @@
 
 #define parameters which are passed in.
 NAME=$1
-DOMAINLIST=DOMAINS
-echo "${DOMAINS} - 3"
+DOMAINLIST=ALLDOMAINS
+echo "${ALLDOMAINS} - 3"
 echo "${DOMAINLIST} - 4"
 
 INDVDOMAIN=$(
   for DOMAIN in {$DOMAINS}; do
-echo "    - name: $DOMAIN"
-echo "      certs:"
-echo "      - certType: usrcerts"
-echo "        secret: $DOMAIN-cert"
-echo "      dpApp:"
-echo "        config:"
-echo "        - $DOMAIN-cfg"
-echo "        local:"
-echo "        - $DOMAIN-local"
+    echo "    - name: $DOMAIN"
+    echo "      certs:"
+    echo "      - certType: usrcerts"
+    echo "        secret: $DOMAIN-cert"
+    echo "      dpApp:"
+    echo "        config:"
+    echo "        - $DOMAIN-cfg"
+    echo "        local:"
+    echo "        - $DOMAIN-local"
   done;
 )
 

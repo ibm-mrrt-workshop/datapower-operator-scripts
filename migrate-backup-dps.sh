@@ -39,14 +39,5 @@ spec:
     accessLevel: privileged
     passwordSecret: datapower-user
   domains:
-    - name: default
-      certs:
-      - certType: usrcerts
-        secret: default-cert
-      dpApp:
-        config:
-        - default-cfg
-        local:
-        - default-local
 $INDVDOMAIN
 EOF

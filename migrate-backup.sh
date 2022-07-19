@@ -198,7 +198,6 @@ process_domain() {
                 --dry-run="client" \
                 --output="yaml" > $OUTPUT_DIR/default-cfg.yaml
             echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"320\"" >> $OUTPUT_DIR/default-cfg.yaml
-            sed -i '' "s/name: default-cfg/name: ${domain}-cfg/g" $OUTPUT_DIR/$domain-cfg.yaml
             echo "Generated: ${OUTPUT_DIR}/default-cfg.yaml"
         else
             echo "Iterating over domain config: ${domain_config}"
@@ -212,7 +211,7 @@ process_domain() {
                     --dry-run="client" \
                     --output="yaml" > $OUTPUT_DIR/$domain-cfg.yaml
                 echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${CFG_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain-cfg.yaml
-                # sed -i '' "s/name: default-cfg/name: ${domain}-cfg/g" $OUTPUT_DIR/$domain-cfg.yaml
+                sed -i '' "s/name: default-cfg/name: ${domain}-cfg/g" $OUTPUT_DIR/$domain-cfg.yaml
                 echo "Generated: ${OUTPUT_DIR}/${domain}-cfg.yaml"
                 ((CFG_SYNC_WAVE_COUNT+=1))
             done

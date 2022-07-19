@@ -10,8 +10,9 @@ UNPACK_DIR=""
 DOMAINS=()
 DOMAIN=""
 OUTPUT_DIR=""
-CFG_SYNC_WAVE_COUNT=321
-LOCAL_SYNC_WAVE_COUNT=321
+CFG_SYNC_WAVE_COUNT=320
+LOCAL_SYNC_WAVE_COUNT=335
+ROUTE_SYNC_WAVE_COUNT=370
 
 #############
 # Functions #
@@ -88,8 +89,10 @@ create_yamls() {
     ./migrate-backup-service.sh ${BACKUP_ZIP%.*} "${PORTARR[@]}" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-service.yaml
     echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-service.yaml created"
     for port in "${PORTARR[@]}"; do
-      ./migrate-backup-route.sh ${BACKUP_ZIP%.*} "$port" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml
-      echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml created"
+        ./migrate-backup-route.sh ${BACKUP_ZIP%.*} "$port" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml
+        echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml created"
+        echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${ROUTE_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/${BACKUP_ZIP%.*}-"$port"-route.yaml
+        ((ROUTE_SYNC_WAVE_COUNT+=1))
     done;
 }
 

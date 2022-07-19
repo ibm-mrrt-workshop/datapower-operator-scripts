@@ -2,26 +2,16 @@
 
 zipfiles=`git diff HEAD --name-only | grep -E '.zip' | sed -e 's/\.zip$//'`
 
-# Make sure domains namespace are lowercase
-
 # Check manual deployment in new namespace.
 # Check for errors with configmap naming conventions.
 
 # Change secret creation in docs for domains.
 # Use dps as a reference.
 
-# Iterate sync-waves for multiple domains for cfg & local - migrate-backup -
-####### Might be done ##########
-# test domains as they may be working.
-# Also iterate sync-waves for routes yamls.
-
-# Check add logic for multiple domain configmaps.
-# Check add logic for kustomization.yaml - ensure names are correct.
-# Check remove logic for GitOps DP multiple domain yamls.
-
 # DEMO ----------------------------------------
-# Changed DPS pods to 1 to show scaling up with GitOps.
+# Remove default cert in dps as we don't have it.
 # Point out sync-wave iteration.
+# Changed DPS pods to 1 to show scaling up with GitOps.
 
 for file in $zipfiles; do
   if [[ -f $file.zip ]]; then

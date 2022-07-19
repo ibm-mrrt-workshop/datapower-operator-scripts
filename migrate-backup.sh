@@ -212,7 +212,7 @@ process_domain() {
                     --dry-run="client" \
                     --output="yaml" > $OUTPUT_DIR/$domain-cfg.yaml
                 echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${CFG_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain-cfg.yaml
-                sed -i '' "s/name: default-cfg/name: ${domain}-cfg/g" $OUTPUT_DIR/$domain-cfg.yaml
+                # sed -i '' "s/name: default-cfg/name: ${domain}-cfg/g" $OUTPUT_DIR/$domain-cfg.yaml
                 echo "Generated: ${OUTPUT_DIR}/${domain}-cfg.yaml"
                 ((CFG_SYNC_WAVE_COUNT+=1))
             done
@@ -229,7 +229,7 @@ process_domain() {
             --dry-run="client" \
             --output="yaml" > $OUTPUT_DIR/$domain-local.yaml
         echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${LOCAL_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain-local.yaml
-        sed -i '' "s/name: default-local/name: ${domain}-local/g" $OUTPUT_DIR/$domain-local.yaml
+        # sed -i '' "s/name: default-local/name: ${domain}-local/g" $OUTPUT_DIR/$domain-local.yaml
         echo "Generated: ${OUTPUT_DIR}/${domain}-local.yaml"
         ((LOCAL_SYNC_WAVE_COUNT+=1))
     fi

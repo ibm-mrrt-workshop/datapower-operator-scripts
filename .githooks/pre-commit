@@ -83,7 +83,6 @@ for file in $yamlfiles; do
       echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[2]} created"
       echo -e "- configmap/${array[2]}" >> ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
     elif [[ "$file" == *-local* ]]; then
-      echo "${file} FOUND!"
       array=($(echo "$file" | tr '/' '\n'))
       yes | cp -f "./datapower-operator-scripts/${file}" "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[2]}"
       echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[2]} created"

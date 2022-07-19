@@ -31,19 +31,6 @@ for file in $zipfiles; do
 
     echo "extracting resources from ${file}.zip"
     ./migrate-backup.sh $file.zip
-    # ./migrate-backup-dps.sh $file > ./$file/$file-output/$file-dps.yaml
-    # echo "./$file/$file-output/$file-dps.yaml created"
-    # ./migrate-backup-service.sh $file "${portarr[@]}" > ./$file/$file-output/$file-service.yaml
-    # echo "./$file/$file-output/$file-service.yaml created"
-    # for port in "${portarr[@]}"; do
-    #   ./migrate-backup-route.sh $file "$port" > ./$file/$file-output/$file-"$port"-route.yaml
-    #   echo "./$file/$file-output/$file-"$port"-route.yaml created"
-    # done;
-
-    # Manipulate cfg files name if not doing in migrate-backup
-
-    sed -i '' 's/[{}]//g' ./$file/$file-output/$file-dps.yaml
-    sed -i '' 's/[{}]//g' ./$file/$file-output/$file-service.yaml
     git add $file
   else
     if [ -d "${file}" ] ; then

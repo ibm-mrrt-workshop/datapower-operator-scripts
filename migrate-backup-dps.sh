@@ -26,7 +26,7 @@ kind: DataPowerService
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "350"
-  name: $NAME
+  name: $NAME-instance
 spec:
   replicas: 1
   version: 10.0-cd

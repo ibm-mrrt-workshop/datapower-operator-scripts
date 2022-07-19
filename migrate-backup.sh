@@ -94,8 +94,6 @@ create_yamls() {
         echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${ROUTE_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/${BACKUP_ZIP%.*}-"$port"-route.yaml
         ((ROUTE_SYNC_WAVE_COUNT+=1))
     done;
-    sed -i '' 's/[{}]//g' ./$file/$file-output/$file-dps.yaml
-    sed -i '' 's/[{}]//g' ./$file/$file-output/$file-service.yaml
 }
 
 populate_domains_array() {

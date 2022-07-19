@@ -193,7 +193,7 @@ process_domain() {
             pretty_print_cfg $OUTPUT_DIR/default.cfg
             echo "Pruning app domain definitions from default.cfg (this may take a while)"
             prune_app_domains $OUTPUT_DIR/default.cfg
-            kubectl create configmap ${domain_norm}-cfg \
+            kubectl create configmap ${domain}-cfg \
                 --from-file="${OUTPUT_DIR}/default.cfg" \
                 --dry-run="client" \
                 --output="yaml" > $OUTPUT_DIR/default-cfg.yaml
@@ -206,12 +206,12 @@ process_domain() {
                 cp $cfg $OUTPUT_DIR
                 pretty_print_cfg "${OUTPUT_DIR}/${domain}.cfg"
                 echo "Generating configmap yaml..."
-                kubectl create configmap ${domain_norm}-cfg \
+                kubectl create configmap ${domain}-cfg \
                     --from-file="${OUTPUT_DIR}/${domain}.cfg" \
                     --dry-run="client" \
                     --output="yaml" > $OUTPUT_DIR/$domain-cfg.yaml
                 echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${CFG_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain-cfg.yaml
-                sed -i '' "s/name: default-cfg/name: ${domain}-cfg/g" $OUTPUT_DIR/$domain-cfg.yaml
+                # sed -i '' "s/name: default-cfg/name: ${domain}-cfg/g" $OUTPUT_DIR/$domain-cfg.yaml
                 echo "Generated: ${OUTPUT_DIR}/${domain}-cfg.yaml"
                 ((CFG_SYNC_WAVE_COUNT+=1))
             done
@@ -223,7 +223,7 @@ process_domain() {
         echo "Generating tarball..."
         tar --directory="${domain_local}" -cvzf $OUTPUT_DIR/$domain-local.tar.gz .
         echo "Generating configmap yaml..."
-        kubectl create configmap ${domain_norm}-local \
+        kubectl create configmap ${domain}-local \
             --from-file="${OUTPUT_DIR}/${domain}-local.tar.gz" \
             --dry-run="client" \
             --output="yaml" > $OUTPUT_DIR/$domain-local.yaml

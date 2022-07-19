@@ -79,6 +79,7 @@ for file in $yamlfiles; do
       echo -e "- route/${array[2]}" >> ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
     elif [[ "$file" == *-cfg* ]]; then
       array=($(echo "$file" | tr '/' '\n'))
+      echo "${array[2]} - FILENAME - IN"
       yes | cp -f "./datapower-operator-scripts/${file}" "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[0]}-${array[2]}"
       echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[2]} created"
       echo -e "- configmap/${array[2]}" >> ./multi-tenancy-gitops-apps/dp/environments/dev/datapower/kustomization.yaml
@@ -118,6 +119,7 @@ for file in $yamlfiles; do
       fi
     elif [[ "$file" == *-cfg* ]]; then
       array=($(echo "$file" | tr '/' '\n'))
+      echo "${array[2]} - FILENAME - OUT"
       if [[ -f "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[2]}" ]]; then
         rm "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[2]}"
         echo "./multi-tenancy-gitops-apps/dp/environments/dev/datapower/configmap/${array[2]} deleted"

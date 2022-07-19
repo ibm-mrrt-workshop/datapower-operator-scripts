@@ -1,10 +1,8 @@
 #!/bin/bash
 
-declare -a portarr=("5611" "9090")
-
 zipfiles=`git diff HEAD --name-only | grep -E '.zip' | sed -e 's/\.zip$//'`
 
-# Lowercase
+# Make sure domains namespace are lowercase
 
 # Check manual deployment in new namespace.
 # Check for errors with configmap naming conventions.

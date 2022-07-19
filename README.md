@@ -73,11 +73,11 @@ Instead:
   - These will be located in the mounted volume from the previous step in the [DataPower-install](https://github.com/DataPower-on-Azure/DataPower-install) repo.
   - If your keys are formatted as .cert/.key then run this command.
     ```
-    oc create secret tls datapower-cert --key=/path/to/my.crt --cert=/path/to/my.key
+    oc create secret tls <domain>-cert --key=/path/to/my.crt --cert=/path/to/my.key
     ```
   - If they are not then run this command instead.
     ```
-    oc create secret generic datapower-cert --from-file=/path/to/cert --from-file=/path/to/key
+    oc create secret generic <domain>-cert --from-file=/path/to/cert --from-file=/path/to/key
     ```
 
 6. Create an admin user credential secret.
@@ -101,43 +101,47 @@ Instead:
     - [serviceAccountName](https://www.ibm.com/docs/en/datapower-operator/1.6?topic=s-serviceaccountname-1)
     - [imagePullSecrets](https://www.ibm.com/docs/en/datapower-operator/1.6?topic=s-imagepullsecrets-1)
 
-8. Go into the "backup-output" folder and apply the domain configmaps.
+8. Add a zip file and commit in git to run scripts and generate files if you haven't done so already.
+
+9. Go into the "backup-output" folder and apply the domain configmaps.
   ```
   cd <zip-file-name>
   cd <zip-file-name>/<zip-file-name>-output
   oc apply -f default-cfg.yaml
   oc apply -f default-local.yaml
   ```
-  _Note: If your zip file contains multiple domains, your config maps might have a slightly different naming convention.
+  _Note: If your zip file contains multiple domains, apply the other domains as well.
 
-9. Once the YAML is applied, check the cluster to ensure that everything looks correct.
+10. Once the YAML is applied, check the cluster to ensure that everything looks correct.
   ```
   oc get configmap
   ```
 
-10. Create the DataPowerService resource in the cluster.
+11. If you do not have a key/cert secret for each domain, make sure to remove the entire "certs" definition from the affected domain(s) in `<zip-file-name>-dps.yaml`. (Optional)
+
+12. Create the DataPowerService resource in the cluster.
   ```
   oc apply -f <zip-file-name>-dps.yaml
   ```
 
-11. Create a service for the DataPowerService in the cluster.
+13. Create a service for the DataPowerService in the cluster.
   ```
   oc apply -f <zip-file-name>-service.yaml
   ```
 
-12. Create a route for the service you just created in the cluster.
+14. Create a route for the service you just created in the cluster.
   ```
   oc apply -f <zip-file-name>-route.yaml
   ```
 
-13. Either use the OpenShift web console or the command line to get the route's address.
+15. Either use the OpenShift web console or the command line to get the route's address.
   - If using the web console, under the "Administrator" tab go to "Networking" and then select "Routes".
   - If using the command line.
     ```
     oc get route
     ```
 
-14. Navigate to the route's address to ensure that your DataPower instance is working.
+16. Navigate to the route's address to ensure that your DataPower instance is working.
 
 ### Instructions for deploying DataPower on OCS with GitOps
 
@@ -179,6 +183,8 @@ Instead:
     4. Add & commit the changes.
 
 2. (Optional) Refer to the instructions in [multi-tenancy-gitops-apps](https://github.com/DataPower-on-Azure/multi-tenancy-gitops-apps) if attempting the GitOps deployment on your own.
+
+11. If you do not have a key/cert secret for each domain, make sure to remove the entire "certs" definition from the affected domain(s) in `multi-tenancy-gitops-apps/dp/environments/dev/datapower/<zip-file-name>-dps.yaml`. (Optional)
 
 3. Change directories to the `multi-tenancy-gitops-apps` repo in the terminal and commit the new files and changes that have been automatically made.
   - If your configuration is complex and changes need to be made please examine the files located in the `/dp/environments/dev/datapower` folders.

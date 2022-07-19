@@ -5,9 +5,6 @@ zipfiles=`git diff HEAD --name-only | grep -E '.zip' | sed -e 's/\.zip$//'`
 # Check manual deployment in new namespace.
 # Check for errors with configmap naming conventions.
 
-# Change secret creation in docs for domains.
-# Use dps as a reference.
-
 # DEMO ----------------------------------------
 # Remove default cert in dps as we don't have it.
 # Point out sync-wave iteration.

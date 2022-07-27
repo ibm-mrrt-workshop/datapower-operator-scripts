@@ -3,7 +3,7 @@
 zipfiles=`git diff HEAD --name-only | grep -E '.zip' | sed -e 's/\.zip$//'`
 
 # Check manual deployment in new namespace.
-# Check for errors with configmap naming conventions.
+# Check for errors with configmap naming conventions. Should be fine.
 
 # DEMO ----------------------------------------
 # Remove default cert in dps as we don't have it.

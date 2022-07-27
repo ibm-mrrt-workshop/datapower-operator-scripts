@@ -48,10 +48,10 @@ Instead:
 
 **Instructions**
 
-1. Install the IBM DataPower catalog source to expose the operator using the CLI.
+1. Install the IBM catalog source to expose IBM operators using the CLI.
   - Inside the root of this repo run
     ```
-    oc apply -f ibm-datapower-operator-catalog.yaml
+    oc apply -f ibm-catalog-source.yaml
     ```
 
 2. Install the DataPower operator on all namespaces using the Web Console.

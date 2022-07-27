@@ -118,7 +118,7 @@ populate_domains_array() {
         domain=${domain%.*}
         domain_norm=$(normalize_domain_name $domain)
         echo "Found domain backup: ${domain_norm}"
-        DOMAINS+=("$domain_norm")
+        DOMAINS+=("$domain")
     done
 
     count="${#DOMAINS[@]}"

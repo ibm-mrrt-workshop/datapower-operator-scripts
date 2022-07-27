@@ -1,9 +1,0 @@
-apiVersion: v1
-data:
-  dev-marsha.cfg: ""
-kind: ConfigMap
-metadata:
-  creationTimestamp: null
-  name: dev-marsha-cfg
-  annotations: 
-    argocd.argoproj.io/sync-wave: "320"

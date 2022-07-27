@@ -208,7 +208,7 @@ process_domain() {
                 pretty_print_cfg "${OUTPUT_DIR}/${domain_norm}.cfg"
                 echo "Generating configmap yaml..."
                 kubectl create configmap ${domain_norm}-cfg \
-                    --from-file="${OUTPUT_DIR}/${domain_norm}.cfg" \
+                    --from-file="${OUTPUT_DIR}/${domain}.cfg" \
                     --dry-run="client" \
                     --output="yaml" > $OUTPUT_DIR/$domain_norm-cfg.yaml
                 echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${CFG_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain_norm-cfg.yaml
@@ -225,7 +225,7 @@ process_domain() {
         tar --directory="${domain_local}" -cvzf $OUTPUT_DIR/$domain-local.tar.gz .
         echo "Generating configmap yaml..."
         kubectl create configmap ${domain_norm}-local \
-            --from-file="${OUTPUT_DIR}/${domain_norm}-local.tar.gz" \
+            --from-file="${OUTPUT_DIR}/${domain}-local.tar.gz" \
             --dry-run="client" \
             --output="yaml" > $OUTPUT_DIR/$domain_norm-local.yaml
         echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${LOCAL_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain_norm-local.yaml

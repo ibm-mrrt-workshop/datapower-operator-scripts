@@ -226,7 +226,7 @@ change_domains_case() {
     for i in "${!DOMAINS[@]}"; do
         domain_norm=$(normalize_domain_name ${DOMAINS[i]})
         echo "Changed name to: ${domain_norm}"
-        ${DOMAINS[i]}=$domain_norm
+        DOMAINS[i]=$domain_norm
     done
 }
 

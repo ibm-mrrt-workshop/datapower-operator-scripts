@@ -223,7 +223,7 @@ change_domains_case() {
 
     echo "Changing domain cases for yamls"
 
-    for i in "${!DOMAINS[@]}"; do do
+    for i in "${!DOMAINS[@]}"; do
         domain_norm=$(normalize_domain_name ${DOMAINS[i]})
         echo "Changed name to: ${domain_norm}"
         ${DOMAINS[i]}=$domain_norm

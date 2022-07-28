@@ -82,20 +82,6 @@ validate_backup_fs() {
     fi
 }
 
-create_yamls() {
-    echo "${DOMAINS[@]}"
-    ./migrate-backup-dps.sh ${BACKUP_ZIP%.*} "${DOMAINS[@]}" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-dps.yaml
-    echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-dps.yaml created"
-    ./migrate-backup-service.sh ${BACKUP_ZIP%.*} "${PORTARR[@]}" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-service.yaml
-    echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-service.yaml created"
-    for port in "${PORTARR[@]}"; do
-        ./migrate-backup-route.sh ${BACKUP_ZIP%.*} "$port" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml
-        echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml created"
-        echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${ROUTE_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/${BACKUP_ZIP%.*}-"$port"-route.yaml
-        ((ROUTE_SYNC_WAVE_COUNT+=1))
-    done;
-}
-
 normalize_domain_name() {
     local domain=$1
 
@@ -108,7 +94,6 @@ normalize_domain_name() {
 populate_domains_array() {
     local zipfile
     local domain
-    local domain_norm
     local count
 
     echo "Searching for domains..."
@@ -116,14 +101,12 @@ populate_domains_array() {
     for zipfile in $(find $UNPACK_DIR -name '*.zip'); do
         domain=$(basename $zipfile)
         domain=${domain%.*}
-        domain_norm=$(normalize_domain_name $domain)
-        echo "Found domain backup: ${domain_norm}"
+        echo "Found domain backup: ${domain}"
         DOMAINS+=("$domain")
     done
 
     count="${#DOMAINS[@]}"
     echo "Found ${count} domains"
-    create_yamls $DOMAINS[@]
 }
 
 pretty_print_cfg() {
@@ -235,6 +218,31 @@ process_domain() {
     fi
 }
 
+change_domains_case() {
+    local domain_norm
+
+    echo "Changing domain cases for yamls"
+
+    for i in "${!DOMAINS[@]}"; do do
+        domain_norm=$(normalize_domain_name ${DOMAINS[i]})
+        echo "Changed name to: ${domain_norm}"
+        ${DOMAINS[i]}=$domain_norm
+    done
+}
+
+create_yamls() {
+    ./migrate-backup-dps.sh ${BACKUP_ZIP%.*} "${DOMAINS[@]}" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-dps.yaml
+    echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-dps.yaml created"
+    ./migrate-backup-service.sh ${BACKUP_ZIP%.*} "${PORTARR[@]}" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-service.yaml
+    echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-service.yaml created"
+    for port in "${PORTARR[@]}"; do
+        ./migrate-backup-route.sh ${BACKUP_ZIP%.*} "$port" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml
+        echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml created"
+        echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${ROUTE_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/${BACKUP_ZIP%.*}-"$port"-route.yaml
+        ((ROUTE_SYNC_WAVE_COUNT+=1))
+    done;
+}
+
 ########
 # Main #
 ########
@@ -314,3 +322,7 @@ else
         process_domain $domain
     done
 fi
+
+change_domains_case
+
+create_yamls $DOMAINS[@]

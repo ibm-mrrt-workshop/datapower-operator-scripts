@@ -181,8 +181,9 @@ process_domain() {
                 --from-file="${OUTPUT_DIR}/default.cfg" \
                 --dry-run="client" \
                 --output="yaml" > $OUTPUT_DIR/default-cfg.yaml
-            echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"320\"" >> $OUTPUT_DIR/default-cfg.yaml
+            echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${CFG_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/default-cfg.yaml
             echo "Generated: ${OUTPUT_DIR}/default-cfg.yaml"
+            ((CFG_SYNC_WAVE_COUNT+=1))
         else
             echo "Iterating over domain config: ${domain_config}"
             for cfg in $(find ${domain_config} -type f); do
@@ -194,7 +195,7 @@ process_domain() {
                     --from-file="${OUTPUT_DIR}/${domain}.cfg" \
                     --dry-run="client" \
                     --output="yaml" > $OUTPUT_DIR/$domain_norm-cfg.yaml
-                sed -i '' "s/"320"/\"${CFG_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain_norm-cfg.yaml
+                echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${CFG_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain_norm-cfg.yaml
                 sed -i '' "s/name: ${domain}-cfg/name: ${domain_norm}-cfg/g" $OUTPUT_DIR/$domain_norm-cfg.yaml
                 echo "Generated: ${OUTPUT_DIR}/${domain_norm}-cfg.yaml"
                 ((CFG_SYNC_WAVE_COUNT+=1))
@@ -238,7 +239,7 @@ create_yamls() {
     for port in "${PORTARR[@]}"; do
         ./migrate-backup-route.sh ${BACKUP_ZIP%.*} "$port" > ./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml
         echo "./${BACKUP_ZIP%.*}/${BACKUP_ZIP%.*}-output/${BACKUP_ZIP%.*}-"$port"-route.yaml created"
-        echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${ROUTE_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/${BACKUP_ZIP%.*}-"$port"-route.yaml
+        sed -i '' "s/370/${ROUTE_SYNC_WAVE_COUNT}/g" $OUTPUT_DIR/${BACKUP_ZIP%.*}-"$port"-route.yaml
         ((ROUTE_SYNC_WAVE_COUNT+=1))
     done;
 }

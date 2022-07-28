@@ -210,8 +210,8 @@ process_domain() {
         kubectl create configmap ${domain}-local \
             --from-file="${OUTPUT_DIR}/${domain}-local.tar.gz" \
             --dry-run="client" \
-            --output="yaml" > $OUTPUT_DIR/$domain-local.yaml
-        echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${LOCAL_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain-local.yaml
+            --output="yaml" > $OUTPUT_DIR/$domain_norm-local.yaml
+        echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${LOCAL_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain_norm-local.yaml
         # sed -i '' "s/name: default-local/name: ${domain_norm}-local/g" $OUTPUT_DIR/$domain_norm-local.yaml
         echo "Generated: ${OUTPUT_DIR}/${domain_norm}-local.yaml"
         ((LOCAL_SYNC_WAVE_COUNT+=1))

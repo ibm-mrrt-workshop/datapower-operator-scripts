@@ -188,15 +188,15 @@ process_domain() {
             for cfg in $(find ${domain_config} -type f); do
                 echo "Pulling: ${cfg}"
                 cp $cfg $OUTPUT_DIR
-                pretty_print_cfg "${OUTPUT_DIR}/${domain_norm}.cfg"
+                pretty_print_cfg "${OUTPUT_DIR}/${domain}.cfg"
                 echo "Generating configmap yaml..."
-                kubectl create configmap ${domain_norm}-cfg \
+                kubectl create configmap ${domain}-cfg \
                     --from-file="${OUTPUT_DIR}/${domain}.cfg" \
                     --dry-run="client" \
                     --output="yaml" > $OUTPUT_DIR/$domain_norm-cfg.yaml
                 echo -e "  annotations: \n    argocd.argoproj.io/sync-wave: \"${CFG_SYNC_WAVE_COUNT}\"" >> $OUTPUT_DIR/$domain_norm-cfg.yaml
                 # sed -i '' "s/name: default-cfg/name: ${domain_norm}-cfg/g" $OUTPUT_DIR/$domain-cfg.yaml
-                echo "Generated: ${OUTPUT_DIR}/${domain}-cfg.yaml"
+                echo "Generated: ${OUTPUT_DIR}/${domain_norm}-cfg.yaml"
                 ((CFG_SYNC_WAVE_COUNT+=1))
             done
         fi

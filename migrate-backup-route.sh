@@ -20,4 +20,7 @@ spec:
     weight: 100
   port:
     targetPort: $NAME-$PORT
+  tls:
+    termination: passthrough
+  wildcardPolicy: None
 EOF
